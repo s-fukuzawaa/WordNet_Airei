@@ -8,42 +8,47 @@ public class SAP
     	this.copy=new Digraph(G);
     }
 
-    private int commonancestor(int v, int w, int index)
+    private int[] commonancestor(int v, int w)
     {
-    	BreadthFirstDirectedPaths help= new BreadthFirstDirectedPaths(copy,w);
-    	Iterator<Integer> temp=copy.adj(index).iterator();
-    	while(temp.hasNext())
+    	int[] result= new int[2];
+    	int length=-1;
+    	int common=-1;
+    	
+    	BreadthFirstDirectedPaths vpath= new BreadthFirstDirectedPaths(copy,v);
+    	BreadthFirstDirectedPaths wpath= new BreadthFirstDirectedPaths(copy,w);
+    	
+    	for(int i=0; i<copy.V(); i++)
     	{
-    		if(help.hasPathTo(temp.next()))
+    		if(vpath.hasPathTo(i)&&wpath.hasPathTo(i))
     		{
-    			return temp.next();
-    		}
-    		else
-    		{
-
-    	    	commonancestor(v,w,temp.next());
+    			if(common<0)
+    			{
+    				common=i;
+    				length=vpath.distTo(common)+wpath.distTo(common);
+    			}
+    			else if(vpath.distTo(i)+wpath.distTo(i)<length)
+    			{
+    				common=i;
+    				length=vpath.distTo(i)+wpath.distTo(i);
+    			}
     		}
     	}
-    	return -1;
+    	result[0]=common;
+    	result[1]=length;
+    	
+    	return result;
+    	
     }
     
     //use breadthFirst method with 1 int
     public int length(int v, int w)
     {
-    	int a=commonancestor(v,w,v);
-    	if(a==-1)
-    	{
-    		return a;
-    	}
-    	BreadthFirstDirectedPaths vpath= new BreadthFirstDirectedPaths(copy,v);
-    	BreadthFirstDirectedPaths wpath= new BreadthFirstDirectedPaths(copy,w);
-    	
-    	return vpath.distTo(a)+wpath.distTo(a);
+    	return commonancestor(v,w)[1];
     }
 
     public int ancestor(int v, int w)
     {
-    	return commonancestor(v,w,v);
+    	return commonancestor(v,w)[0];
     }
     
     
