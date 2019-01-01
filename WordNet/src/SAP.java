@@ -68,7 +68,7 @@ public class SAP
     	result[0]=common;
     	result[1]=length;
     	
-    	return result;
+    	return result;//
     }
     	
     //use breadthFirst method with 1 int
