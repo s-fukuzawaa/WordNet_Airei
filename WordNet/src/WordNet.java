@@ -11,6 +11,9 @@ public class WordNet
     	// own code to actually store the file contents into the
     	// data structures you create as fields of the WordNet class.
     	
+    	
+    	this.synsets= new ArrayList();
+    	this.hypernyms= new ArrayList();
         // Parse synsets
         int largestId = -1;				// TODO: You might find this value useful 
         In inSynsets = new In(synsets);
