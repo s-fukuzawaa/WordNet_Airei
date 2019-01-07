@@ -1,7 +1,9 @@
+import java.util.ArrayList;
+
 public class WordNet
 {    
-	private String synsets;
-	private String hypernyms;
+	private ArrayList synsets;
+	private ArrayList hypernyms;
     public WordNet(String synsets, String hypernyms)
     {
     	// TODO:  You may use the code below to open and parse the
@@ -30,12 +32,13 @@ public class WordNet
             for (String noun : nouns)
             {
                // TODO: you should probably do something here
+            	this.synsets.add(noun);
+            	
             }
             
             // tokens[2] is gloss, but we're not using that
         }
         inSynsets.close();
-        this.synsets=synsets;
         // Parse hypernyms
         In inHypernyms = new In(hypernyms);
         while (inHypernyms.hasNextLine())
@@ -47,11 +50,10 @@ public class WordNet
             
             for (int i=1; i < tokens.length; i++)
             {
-               // TODO: you should probably do something here
+               this.hypernyms.add(tokens[i]);
             }
         }
         inHypernyms.close();
-        this.hypernyms=hypernyms;
 
         // TODO: Remember to remove this when your constructor is done!
     }
