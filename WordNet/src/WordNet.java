@@ -1,5 +1,7 @@
 public class WordNet
 {    
+	private String synsets;
+	private String hypernyms;
     public WordNet(String synsets, String hypernyms)
     {
     	// TODO:  You may use the code below to open and parse the
@@ -33,7 +35,7 @@ public class WordNet
             // tokens[2] is gloss, but we're not using that
         }
         inSynsets.close();
-        
+        this.synsets=synsets;
         // Parse hypernyms
         In inHypernyms = new In(hypernyms);
         while (inHypernyms.hasNextLine())
@@ -49,9 +51,9 @@ public class WordNet
             }
         }
         inHypernyms.close();
+        this.hypernyms=hypernyms;
 
         // TODO: Remember to remove this when your constructor is done!
-    	throw new UnsupportedOperationException();
     }
 
     public Iterable<String> nouns()
@@ -61,7 +63,7 @@ public class WordNet
 
     public boolean isNoun(String word)
     {
-    	throw new UnsupportedOperationException();
+    	return synsets.contains(word);
     }
 
     public int distance(String nounA, String nounB)
