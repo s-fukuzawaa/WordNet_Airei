@@ -10,7 +10,11 @@ public class WordNet
     	// synsets and hypernyms file.  However, you MUST add your
     	// own code to actually store the file contents into the
     	// data structures you create as fields of the WordNet class.
-    	
+    	if(synsets.equals(null)||hypernyms.equals(null))
+    	{
+    		throw new java.lang.NullPointerException();
+    	}
+    	Digraph temp=new Digraph(synsets);
     	
     	this.synsets= new ArrayList();
     	this.hypernyms= new ArrayList();
