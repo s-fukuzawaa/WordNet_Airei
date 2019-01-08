@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class WordNet
 {    
 	private ArrayList synsets;
-	private ArrayList hypernyms;
+	private SAP hypernyms;
     public WordNet(String synsets, String hypernyms)
     {
     	// TODO:  You may use the code below to open and parse the
@@ -14,10 +14,8 @@ public class WordNet
     	{
     		throw new java.lang.NullPointerException();
     	}
-    	Digraph temp=new Digraph(synsets);
     	
     	this.synsets= new ArrayList();
-    	this.hypernyms= new ArrayList();
         // Parse synsets
         int largestId = -1;				// TODO: You might find this value useful 
         In inSynsets = new In(synsets);
@@ -47,6 +45,8 @@ public class WordNet
         }
         inSynsets.close();
         // Parse hypernyms
+        
+        Digraph temp= new Digraph(this.synsets.size());
         In inHypernyms = new In(hypernyms);
         while (inHypernyms.hasNextLine())
         {
@@ -57,17 +57,18 @@ public class WordNet
             
             for (int i=1; i < tokens.length; i++)
             {
-               this.hypernyms.add(tokens[i]);
+               temp.addEdge(v, Integer.parseInt(tokens[i]));
             }
         }
         inHypernyms.close();
-
+        
+        this.hypernyms= new SAP(temp);
         // TODO: Remember to remove this when your constructor is done!
     }
 
     public Iterable<String> nouns()
     {
-    	throw new UnsupportedOperationException();
+    	return this.synsets;
     }
 
     public boolean isNoun(String word)
