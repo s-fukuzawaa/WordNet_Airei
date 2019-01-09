@@ -82,6 +82,10 @@ public class WordNet
 
     public String sap(String nounA, String nounB)
     {
+    	if(this.synsets.contains(nounA)==false&&this.synsets.contains(nounB)==false)
+    	{
+    		throw new java.lang.IllegalArgumentException();
+    	}
     	int a=this.synsets.indexOf(nounA);
     	int b=this.synsets.indexOf(nounB);
     	int result= hypernyms.ancestor(a, b);
