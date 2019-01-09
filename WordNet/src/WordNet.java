@@ -2,7 +2,8 @@ import java.util.ArrayList;
 
 public class WordNet
 {    
-	private LinearProbingHashST synsets;
+	private LinearProbingHashST <String, ArrayList<Integer>> synsets;
+	private LinearProbingHashST <Integer,String> sap;
 	private SAP hypernyms;
     public WordNet(String synsets, String hypernyms)
     {
@@ -15,7 +16,7 @@ public class WordNet
     		throw new java.lang.NullPointerException();
     	}
     	
-    	this.synsets= new LinearProbingHashST();
+    	this.synsets= new LinearProbingHashST<String, ArrayList<Integer>>();
         // Parse synsets
         int largestId = -1;				// TODO: You might find this value useful 
         In inSynsets = new In(synsets);
@@ -33,24 +34,27 @@ public class WordNet
             // Nouns in synset
             String synset = tokens[1];
             String[] nouns = synset.split(" ");
+            
             for (String noun : nouns)
             {
+            	tem.add(noun);
                // TODO: you should probably do something here
             	if(this.synsets.contains(noun))
             	{
-            		ArrayList temp= (ArrayList) this.synsets.get(noun);
+            		ArrayList<Integer> temp=  this.synsets.get(noun);
             		temp.add(id);
             		this.synsets.put(noun,temp);
             	}
             	else
             	{
-            		ArrayList temp2= new ArrayList();
+            		ArrayList<Integer> temp2= new ArrayList<Integer>();
             		temp2.add(id);
                 	this.synsets.put(noun,temp2);
             	}
             	
-            	
+            	 this.sap.put(id, noun);
             }
+           
             
             // tokens[2] is gloss, but we're not using that
         }
@@ -110,7 +114,9 @@ public class WordNet
     	Iterable<Integer> b=(Iterable<Integer>) this.synsets.get(nounB);
     	int result= hypernyms.ancestor(a, b);
     	
-    	return (String) this.synsets.get(result);
+    	
+    	return sap.get(result);
+    	
     }
     
     private void testNouns(String nounA, String nounB)
