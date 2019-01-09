@@ -17,6 +17,7 @@ public class WordNet
     	}
     	
     	this.synsets= new LinearProbingHashST<String, ArrayList<Integer>>();
+    	this.sap= new LinearProbingHashST <Integer,String>();
         // Parse synsets
         int largestId = -1;				// TODO: You might find this value useful 
         In inSynsets = new In(synsets);
@@ -37,7 +38,7 @@ public class WordNet
             
             for (String noun : nouns)
             {
-            	tem.add(noun);
+            	
                // TODO: you should probably do something here
             	if(this.synsets.contains(noun))
             	{
