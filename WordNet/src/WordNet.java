@@ -30,14 +30,13 @@ public class WordNet
             {
                 largestId = id;
             }
-
             // Nouns in synset
             String synset = tokens[1];
             String[] nouns = synset.split(" ");
             for (String noun : nouns)
             {
                // TODO: you should probably do something here
-            	this.synsets.add(noun);
+            	this.synsets.add(id,noun);
             	
             }
             
@@ -83,7 +82,11 @@ public class WordNet
 
     public String sap(String nounA, String nounB)
     {
-    	throw new UnsupportedOperationException();
+    	int a=this.synsets.indexOf(nounA);
+    	int b=this.synsets.indexOf(nounB);
+    	int result= hypernyms.ancestor(a, b);
+    	
+    	return (String) this.synsets.get(result);
     }
     
     private void testNouns(String nounA, String nounB)
