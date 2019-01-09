@@ -89,7 +89,10 @@ public class WordNet
     	int a=this.synsets.indexOf(nounA);
     	int b=this.synsets.indexOf(nounB);
     	int result= hypernyms.ancestor(a, b);
-    	
+    	if(result==-1)
+    	{
+    		throw new java.lang.IllegalArgumentException();
+    	}
     	return (String) this.synsets.get(result);
     }
     
@@ -103,8 +106,8 @@ public class WordNet
     // for unit testing of this class
     public static void main(String[] args)
     {
-		String synsetsFile = "testInput/synsets.txt";
-		String hypernymsFile = "testInput/hypernyms.txt";
+		String synsetsFile = "testInput/synsets100-subgraph.txt";
+		String hypernymsFile = "testInput/hypernyms100-subgraph.txt";
 
 		WordNet wordnet = new WordNet(synsetsFile, hypernymsFile);
         wordnet.testNouns("municipality", "region");
