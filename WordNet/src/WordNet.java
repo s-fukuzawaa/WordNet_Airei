@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class WordNet
 {    
-	private ArrayList synsets;
+	private LinearProbingHashST synsets;
 	private SAP hypernyms;
     public WordNet(String synsets, String hypernyms)
     {
@@ -15,7 +15,7 @@ public class WordNet
     		throw new java.lang.NullPointerException();
     	}
     	
-    	this.synsets= new ArrayList();
+    	this.synsets= new LinearProbingHashST();
         // Parse synsets
         int largestId = -1;				// TODO: You might find this value useful 
         In inSynsets = new In(synsets);
@@ -36,7 +36,19 @@ public class WordNet
             for (String noun : nouns)
             {
                // TODO: you should probably do something here
-            	this.synsets.add(id,noun);
+            	if(this.synsets.contains(noun))
+            	{
+            		ArrayList temp= (ArrayList) this.synsets.get(noun);
+            		temp.add(id);
+            		this.synsets.put(noun,temp);
+            	}
+            	else
+            	{
+            		ArrayList temp2= new ArrayList();
+            		temp2.add(id);
+                	this.synsets.put(noun,temp2);
+            	}
+            	
             	
             }
             
@@ -67,7 +79,7 @@ public class WordNet
 
     public Iterable<String> nouns()
     {
-    	return this.synsets;
+    	return this.synsets.keys();
     }
 
     public boolean isNoun(String word)
@@ -81,8 +93,8 @@ public class WordNet
     	{
     		throw new java.lang.IllegalArgumentException();
     	}
-    	int a=this.synsets.indexOf(nounA);
-    	int b=this.synsets.indexOf(nounB);
+    	Iterable<Integer> a=(Iterable<Integer>) this.synsets.get(nounA);
+    	Iterable<Integer> b=(Iterable<Integer>) this.synsets.get(nounB);
     	int result= hypernyms.length(a, b);
     	
     	return result;
@@ -94,13 +106,10 @@ public class WordNet
     	{
     		throw new java.lang.IllegalArgumentException();
     	}
-    	int a=this.synsets.indexOf(nounA);
-    	int b=this.synsets.indexOf(nounB);
+    	Iterable<Integer> a=(Iterable<Integer>) this.synsets.get(nounA);
+    	Iterable<Integer> b=(Iterable<Integer>) this.synsets.get(nounB);
     	int result= hypernyms.ancestor(a, b);
-    	if(result==-1)
-    	{
-    		return null;
-    	}
+    	
     	return (String) this.synsets.get(result);
     }
     
@@ -118,7 +127,7 @@ public class WordNet
 		String hypernymsFile = "testInput/hypernyms100-subgraph.txt";
 
 		WordNet wordnet = new WordNet(synsetsFile, hypernymsFile);
-        wordnet.testNouns("municipality", "region");
+       /* wordnet.testNouns("municipality", "region");
         wordnet.testNouns("individual", "edible_fruit");
         wordnet.testNouns("Black_Plague", "black_marlin");
         wordnet.testNouns("American_water_spaniel", "histology");
@@ -126,6 +135,7 @@ public class WordNet
         
         wordnet.testNouns("chocolate", "brownie");
         wordnet.testNouns("cookie", "brownie");
-        wordnet.testNouns("martini", "beer");
+        wordnet.testNouns("martini", "beer");*/
+		wordnet.testNouns("ribonucleinase", "whacker");
     }
 }
