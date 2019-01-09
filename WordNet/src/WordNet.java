@@ -77,7 +77,15 @@ public class WordNet
 
     public int distance(String nounA, String nounB)
     {
-    	throw new UnsupportedOperationException();
+    	if(this.synsets.contains(nounA)==false&&this.synsets.contains(nounB)==false)
+    	{
+    		throw new java.lang.IllegalArgumentException();
+    	}
+    	int a=this.synsets.indexOf(nounA);
+    	int b=this.synsets.indexOf(nounB);
+    	int result= hypernyms.length(a, b);
+    	
+    	return result;
     }
 
     public String sap(String nounA, String nounB)
@@ -91,7 +99,7 @@ public class WordNet
     	int result= hypernyms.ancestor(a, b);
     	if(result==-1)
     	{
-    		throw new java.lang.IllegalArgumentException();
+    		return null;
     	}
     	return (String) this.synsets.get(result);
     }
