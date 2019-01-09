@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class WordNet
 {    
 	private LinearProbingHashST <String, ArrayList<Integer>> synsets;
-	private LinearProbingHashST <Integer,String> sap;
+	private LinearProbingHashST <Integer,ArrayList<String>> sap;
 	private SAP hypernyms;
     public WordNet(String synsets, String hypernyms)
     {
@@ -17,7 +17,7 @@ public class WordNet
     	}
     	
     	this.synsets= new LinearProbingHashST<String, ArrayList<Integer>>();
-    	this.sap= new LinearProbingHashST <Integer,String>();
+    	this.sap= new LinearProbingHashST <Integer,ArrayList<String>>();
         // Parse synsets
         int largestId = -1;				// TODO: You might find this value useful 
         In inSynsets = new In(synsets);
@@ -36,9 +36,11 @@ public class WordNet
             String synset = tokens[1];
             String[] nouns = synset.split(" ");
             
+            ArrayList<String> tem= new ArrayList<String>();
+            
             for (String noun : nouns)
             {
-            	
+            	tem.add(noun);
                // TODO: you should probably do something here
             	if(this.synsets.contains(noun))
             	{
@@ -53,9 +55,8 @@ public class WordNet
                 	this.synsets.put(noun,temp2);
             	}
             	
-            	 this.sap.put(id, noun);
             }
-           
+            this.sap.put(id, tem);
             
             // tokens[2] is gloss, but we're not using that
         }
@@ -114,9 +115,19 @@ public class WordNet
     	Iterable<Integer> a=(Iterable<Integer>) this.synsets.get(nounA);
     	Iterable<Integer> b=(Iterable<Integer>) this.synsets.get(nounB);
     	int result= hypernyms.ancestor(a, b);
+    	String answer="";
+    	answer=sap.get(result).get(0);
+    	if(sap.get(result).size()>1)
+    	{
+    		for(int i=1; i<sap.get(result).size(); i++)
+    		{
+        		answer= answer+" "+sap.get(result).get(i);
+        	}
+        	
+    	}
     	
     	
-    	return sap.get(result);
+    	return answer;
     	
     }
     
@@ -143,6 +154,6 @@ public class WordNet
         wordnet.testNouns("chocolate", "brownie");
         wordnet.testNouns("cookie", "brownie");
         wordnet.testNouns("martini", "beer");*/
-		wordnet.testNouns("ribonucleinase", "whacker");
+		wordnet.testNouns("tetanus_immunoglobulin", "IgM");
     }
 }
