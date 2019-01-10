@@ -105,11 +105,11 @@ public class WordNet
 
     public int distance(String nounA, String nounB)
     {
-    	/*if(nounA==null||nounB==null)
+    	if(nounA==null||nounB==null)
     	{
     		throw new java.lang.NullPointerException();
-    	}*/
-    	if(this.synsets.contains(nounA)==false&&this.synsets.contains(nounB)==false)
+    	}
+    	if(this.synsets.contains(nounA)==false||this.synsets.contains(nounB)==false)
     	{
     		throw new java.lang.IllegalArgumentException();
     	}
@@ -126,7 +126,7 @@ public class WordNet
     	{
     		throw new java.lang.NullPointerException();
     	}
-    	if(this.synsets.contains(nounA)==false&&this.synsets.contains(nounB)==false)
+    	if(this.synsets.contains(nounA)==false||this.synsets.contains(nounB)==false)
     	{
     		throw new java.lang.IllegalArgumentException();
     	}
@@ -159,8 +159,8 @@ public class WordNet
     // for unit testing of this class
     public static void main(String[] args)
     {
-		String synsetsFile = "testInput/synsets100-subgraph.txt";
-		String hypernymsFile = "testInput/hypernyms100-subgraph.txt";
+		String synsetsFile = "testInput/synsets15.txt";
+		String hypernymsFile = "testInput/hypernyms15Tree.txt";
 
 		WordNet wordnet = new WordNet(synsetsFile, hypernymsFile);
        /* wordnet.testNouns("municipality", "region");
@@ -172,6 +172,6 @@ public class WordNet
         wordnet.testNouns("chocolate", "brownie");
         wordnet.testNouns("cookie", "brownie");
         wordnet.testNouns("martini", "beer");*/
-		wordnet.testNouns("tetanus_immunoglobulin", "IgM");
+		wordnet.testNouns("a", "invalid");
     }
 }
