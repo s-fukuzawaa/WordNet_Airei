@@ -81,7 +81,8 @@ public class WordNet
         
         
         this.hypernyms= new SAP(temp);
-        if(this.hypernyms.ancestor(38003, 0)!=38003)
+        
+        if(this.hypernyms.ancestor(this.sap.keys(), this.sap.keys())==-1)
         {
         	throw new java.lang.IllegalArgumentException();
         }
