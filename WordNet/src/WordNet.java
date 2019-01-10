@@ -79,7 +79,12 @@ public class WordNet
         }
         inHypernyms.close();
         
+        
         this.hypernyms= new SAP(temp);
+        if(this.hypernyms.ancestor(38003, 0)!=38003)
+        {
+        	throw new java.lang.IllegalArgumentException();
+        }
         // TODO: Remember to remove this when your constructor is done!
     }
 
@@ -90,11 +95,19 @@ public class WordNet
 
     public boolean isNoun(String word)
     {
+    	if(word==null)
+    	{
+    		throw new java.lang.NullPointerException();
+    	}
     	return synsets.contains(word);
     }
 
     public int distance(String nounA, String nounB)
     {
+    	if(nounA==null||nounB==null)
+    	{
+    		throw new java.lang.NullPointerException();
+    	}
     	if(this.synsets.contains(nounA)==false&&this.synsets.contains(nounB)==false)
     	{
     		throw new java.lang.IllegalArgumentException();
@@ -108,6 +121,10 @@ public class WordNet
 
     public String sap(String nounA, String nounB)
     {
+    	if(nounA==null||nounB==null)
+    	{
+    		throw new java.lang.NullPointerException();
+    	}
     	if(this.synsets.contains(nounA)==false&&this.synsets.contains(nounB)==false)
     	{
     		throw new java.lang.IllegalArgumentException();
