@@ -105,10 +105,10 @@ public class WordNet
 
     public int distance(String nounA, String nounB)
     {
-    	if(nounA==null||nounB==null)
+    	/*if(nounA==null||nounB==null)
     	{
     		throw new java.lang.NullPointerException();
-    	}
+    	}*/
     	if(this.synsets.contains(nounA)==false&&this.synsets.contains(nounB)==false)
     	{
     		throw new java.lang.IllegalArgumentException();
