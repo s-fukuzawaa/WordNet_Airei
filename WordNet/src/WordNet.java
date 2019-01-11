@@ -71,10 +71,19 @@ public class WordNet
             String[] tokens = line.split(",");
             
             int v = Integer.parseInt(tokens[0]);
-            
+            DirectedDFS check= new DirectedDFS(temp,v);
+           
             for (int i=1; i < tokens.length; i++)
             {
-               temp.addEdge(v, Integer.parseInt(tokens[i]));
+            	DirectedDFS check2= new DirectedDFS(temp,Integer.parseInt(tokens[i]));
+            	if(check.marked(Integer.parseInt(tokens[i]))||check2.marked(v))
+            	{
+            		throw new java.lang.IllegalArgumentException();
+            	}
+            	else
+            	{
+            		temp.addEdge(v, Integer.parseInt(tokens[i]));
+            	}
             }
         }
         inHypernyms.close();
@@ -82,10 +91,7 @@ public class WordNet
         
         this.hypernyms= new SAP(temp);
         
-        if(this.hypernyms.ancestor(this.sap.keys(), this.sap.keys())==-1)
-        {
-        	throw new java.lang.IllegalArgumentException();
-        }
+        
         // TODO: Remember to remove this when your constructor is done!
     }
 
@@ -159,8 +165,8 @@ public class WordNet
     // for unit testing of this class
     public static void main(String[] args)
     {
-		String synsetsFile = "testInput/synsets15.txt";
-		String hypernymsFile = "testInput/hypernyms15Tree.txt";
+		String synsetsFile = "testInput/synsets3.txt";
+		String hypernymsFile = "testInput/hypernyms3InvalidCycle.txt";
 
 		WordNet wordnet = new WordNet(synsetsFile, hypernymsFile);
        /* wordnet.testNouns("municipality", "region");
