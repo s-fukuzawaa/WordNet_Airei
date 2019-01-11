@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class WordNet
 {    
@@ -73,6 +74,7 @@ public class WordNet
             int v = Integer.parseInt(tokens[0]);
             DirectedDFS check= new DirectedDFS(temp,v);
            
+            
             for (int i=1; i < tokens.length; i++)
             {
             	DirectedDFS check2= new DirectedDFS(temp,Integer.parseInt(tokens[i]));
@@ -84,9 +86,15 @@ public class WordNet
             	{
             		temp.addEdge(v, Integer.parseInt(tokens[i]));
             	}
+            	
             }
         }
         inHypernyms.close();
+        
+        if(temp.E()+1<temp.V())
+        {
+    		throw new java.lang.IllegalArgumentException();
+        }
         
         
         this.hypernyms= new SAP(temp);
@@ -165,8 +173,8 @@ public class WordNet
     // for unit testing of this class
     public static void main(String[] args)
     {
-		String synsetsFile = "testInput/synsets3.txt";
-		String hypernymsFile = "testInput/hypernyms3InvalidCycle.txt";
+		String synsetsFile = "testInput/synsets6.txt";
+		String hypernymsFile = "testInput/hypernyms6InvalidCycle+Path.txt";
 
 		WordNet wordnet = new WordNet(synsetsFile, hypernymsFile);
        /* wordnet.testNouns("municipality", "region");
