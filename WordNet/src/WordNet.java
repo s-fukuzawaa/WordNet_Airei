@@ -109,15 +109,18 @@ public class WordNet
         	}
         	
         }
-        
-        if(this.hypernyms.ancestor(toporder.get(toporder.size()-1), root)==-1)
+        Iterator<Integer> counthelp= temp.adj(toporder.get(toporder.size()-1)).iterator();
+        while(counthelp.hasNext())
         {
-        	throw new java.lang.IllegalArgumentException();
+        	if(counthelp.next()!=root)
+        	{
+        		throw new java.lang.IllegalArgumentException();
+        	}
         }
-        DirectedDFS toptobottom= new DirectedDFS(temp,toporder.get(0));
-       
         
-        if(temp.adj(root).iterator().hasNext()==true||!toptobottom.marked(root)||headcount>1)
+        DirectedDFS toptobottom= new DirectedDFS(temp,toporder.get(0));
+        
+        if(temp.adj(root).iterator().hasNext()==true||!toptobottom.marked(root))
         {
         	throw new java.lang.IllegalArgumentException();
         }
@@ -196,8 +199,8 @@ public class WordNet
     // for unit testing of this class
     public static void main(String[] args)
     {
-		String synsetsFile = "testInput/synsets6.txt";
-		String hypernymsFile = "testInput/hypernyms6InvalidTwoRoots.txt";
+		String synsetsFile = "testInput/synsets100-subgraph.txt";
+		String hypernymsFile = "testInput/hypernyms100-subgraph.txt";
 
 		WordNet wordnet = new WordNet(synsetsFile, hypernymsFile);
        /* wordnet.testNouns("municipality", "region");
