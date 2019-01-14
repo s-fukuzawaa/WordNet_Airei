@@ -11,23 +11,22 @@ public class Outcast
 
 	public String outcast(String[] nouns)
 	{
-		int ave=0;
+		int maxindex=0;
+		int dismax=0;
 		for(int i=0; i<nouns.length; i++)
 		{
-			ave=ave+wordnet.distance("entity", nouns[i]);
-		}
-		ave=ave/nouns.length;
-		int index=0;
-		
-		for(int i=0; i<nouns.length; i++)
-		{
-			if(Math.abs(ave-wordnet.distance("entity", nouns[i]))>Math.abs(ave-wordnet.distance("entity", nouns[index])))
+			for(int j=i+1; j<nouns.length;j++)
 			{
-				index=i;
+				if(wordnet.distance(nouns[i], nouns[j])>dismax)
+				{
+					dismax=wordnet.distance(nouns[i], nouns[j]);
+					maxindex=j;
+				}
 			}
 		}
 		
-		return nouns[index];
+		
+		return nouns[maxindex];
 	}
 
 	// for unit testing of this class
@@ -39,8 +38,8 @@ public class Outcast
 		//String[] outcastFiles = { "testInput/outcast3.txt", "testInput/outcast4.txt" };
 		String[] outcastFiles = null;
 		
-		String synsetsFile = "testInput/synsets.txt";
-		String hypernymsFile = "testInput/hypernyms.txt";
+		String synsetsFile = "testInput/synsets50000-subgraph.txt";
+		String hypernymsFile = "testInput/hypernyms50000-subgraph.txt";
 		
 		WordNet wordnet = new WordNet(synsetsFile, hypernymsFile);
 		Outcast outcast = new Outcast(wordnet);
