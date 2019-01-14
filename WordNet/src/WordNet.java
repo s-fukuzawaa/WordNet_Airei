@@ -95,19 +95,25 @@ public class WordNet
         Topological t= new Topological(temp);
         int root=0;
         ArrayList<Integer> toporder= new ArrayList<Integer>();
-        Iterator<Integer> a= t.order().iterator();
+        Iterator<Integer> path= t.order().iterator();
         
-        while(a.hasNext())
+        while(path.hasNext())
         {
-        	toporder.add(a.next());
+        	int ordercheck=path.next();
+        	root=ordercheck;
+        	if(temp.adj(ordercheck).iterator().hasNext())
+        	{
+        		toporder.add(ordercheck);
+        	}
         }
-        root=toporder.indexOf(toporder.size()-1);
+        
         DirectedDFS toptobottom= new DirectedDFS(temp,toporder.get(0));
         
         if(temp.adj(root).iterator().hasNext()==true||!toptobottom.marked(root))
         {
         	throw new java.lang.IllegalArgumentException();
         }
+        
         
         // TODO: Remember to remove this when your constructor is done!
     }
@@ -182,8 +188,8 @@ public class WordNet
     // for unit testing of this class
     public static void main(String[] args)
     {
-		String synsetsFile = "testInput/synsets6.txt";
-		String hypernymsFile = "testInput/hypernyms6InvalidCycle+Path.txt";
+		String synsetsFile = "testInput/synsets15.txt";
+		String hypernymsFile = "testInput/hypernyms15Path.txt";
 
 		WordNet wordnet = new WordNet(synsetsFile, hypernymsFile);
        /* wordnet.testNouns("municipality", "region");
