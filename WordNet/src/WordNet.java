@@ -97,29 +97,25 @@ public class WordNet
         int headcount=0;
         ArrayList<Integer> toporder= new ArrayList<Integer>();
         Iterator<Integer> path= t.order().iterator();
+        
         while(path.hasNext())
         {
-        	if(headcount>1)
-        	{
-        		throw new java.lang.IllegalArgumentException();
-        	}
         	int ordercheck=path.next();
         	root=ordercheck;
         	if(temp.adj(ordercheck).iterator().hasNext())
         	{
-        		
         		toporder.add(ordercheck);
         	}
         	else if(temp.reverse().adj(ordercheck).iterator().hasNext())
         	{
         		headcount++;
         	}
-        	
-        	
         }
         
         DirectedDFS toptobottom= new DirectedDFS(temp,toporder.get(0));
-        if(temp.adj(root).iterator().hasNext()==true||!toptobottom.marked(root))
+       
+        
+        if(temp.adj(root).iterator().hasNext()==true||!toptobottom.marked(root)||headcount>1)
         {
         	throw new java.lang.IllegalArgumentException();
         }
@@ -198,8 +194,8 @@ public class WordNet
     // for unit testing of this class
     public static void main(String[] args)
     {
-		String synsetsFile = "testInput/synsets6.txt";
-		String hypernymsFile = "testInput/hypernyms6InvalidTwoRoots.txt";
+		String synsetsFile = "testInput/synsets100-subgraph.txt";
+		String hypernymsFile = "testInput/hypernyms100-subgraph.txt";
 
 		WordNet wordnet = new WordNet(synsetsFile, hypernymsFile);
        /* wordnet.testNouns("municipality", "region");
