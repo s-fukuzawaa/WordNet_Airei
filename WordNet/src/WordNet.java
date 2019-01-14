@@ -199,7 +199,7 @@ public class WordNet
     public static void main(String[] args)
     {
 		String synsetsFile = "testInput/synsets6.txt";
-		String hypernymsFile = "testInput/hypernyms6InvalidCycle+Path.txt";
+		String hypernymsFile = "testInput/hypernyms6InvalidTwoRoots.txt";
 
 		WordNet wordnet = new WordNet(synsetsFile, hypernymsFile);
        /* wordnet.testNouns("municipality", "region");
