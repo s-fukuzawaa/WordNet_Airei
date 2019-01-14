@@ -11,7 +11,8 @@ public class Outcast
 
 	public String outcast(String[] nouns)
 	{
-		int maxindex=0;
+		int maxindex1=0;
+		int maxindex2=0;
 		int dismax=0;
 		for(int i=0; i<nouns.length; i++)
 		{
@@ -20,13 +21,27 @@ public class Outcast
 				if(wordnet.distance(nouns[i], nouns[j])>dismax)
 				{
 					dismax=wordnet.distance(nouns[i], nouns[j]);
-					maxindex=j;
+					maxindex1=i;
+					maxindex2=j;
 				}
 			}
 		}
 		
+		double maxindex1all=0;
+		double maxindex2all=0;
+		for(int i=0; i<nouns.length; i++)
+		{
+			maxindex1all=maxindex1all+wordnet.distance(nouns[i], nouns[maxindex1]);
+			maxindex2all=maxindex2all+wordnet.distance(nouns[i], nouns[maxindex2]);
+
+		}
 		
-		return nouns[maxindex];
+		if(maxindex1all>maxindex2all)
+		{
+			return nouns[maxindex1];
+			
+		}
+		return nouns[maxindex2];
 	}
 
 	// for unit testing of this class
