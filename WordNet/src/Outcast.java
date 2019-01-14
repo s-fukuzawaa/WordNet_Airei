@@ -3,14 +3,31 @@ import java.util.Scanner;
 
 public class Outcast
 {
+	private WordNet wordnet;
 	public Outcast(WordNet wordnet)
 	{
-		throw new UnsupportedOperationException();
+		this.wordnet=wordnet;
 	}
 
 	public String outcast(String[] nouns)
 	{
-		throw new UnsupportedOperationException();
+		int ave=0;
+		for(int i=0; i<nouns.length; i++)
+		{
+			ave=ave+wordnet.distance("entity", nouns[i]);
+		}
+		ave=ave/nouns.length;
+		int index=0;
+		
+		for(int i=0; i<nouns.length; i++)
+		{
+			if(Math.abs(ave-wordnet.distance("entity", nouns[i]))>Math.abs(ave-wordnet.distance("entity", nouns[index])))
+			{
+				index=i;
+			}
+		}
+		
+		return nouns[index];
 	}
 
 	// for unit testing of this class
