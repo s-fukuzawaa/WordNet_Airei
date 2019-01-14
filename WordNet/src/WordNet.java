@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class WordNet
 {    
@@ -91,6 +92,18 @@ public class WordNet
         
         this.hypernyms= new SAP(temp);
         
+        Topological t= new Topological(temp);
+        int root=0;
+        Iterator<Integer> a= t.order().iterator();
+        while(a.hasNext())
+        {
+        	root=a.next();
+        }
+        
+        if(temp.adj(root).iterator().hasNext()==false)
+        {
+        	throw new java.lang.IllegalArgumentException();
+        }
         
         // TODO: Remember to remove this when your constructor is done!
     }
@@ -165,8 +178,8 @@ public class WordNet
     // for unit testing of this class
     public static void main(String[] args)
     {
-		String synsetsFile = "testInput/synsets3.txt";
-		String hypernymsFile = "testInput/hypernyms3InvalidCycle.txt";
+		String synsetsFile = "testInput/synsets100-subgraph.txt";
+		String hypernymsFile = "testInput/hypernyms100-subgraph.txt";
 
 		WordNet wordnet = new WordNet(synsetsFile, hypernymsFile);
        /* wordnet.testNouns("municipality", "region");
