@@ -110,7 +110,7 @@ public class WordNet
         		
         		toporder.add(ordercheck);
         	}
-        	else if(!temp.adj(ordercheck).iterator().hasNext()&&temp.reverse().adj(ordercheck).iterator().hasNext())
+        	else if(temp.reverse().adj(ordercheck).iterator().hasNext())
         	{
         		headcount++;
         	}
