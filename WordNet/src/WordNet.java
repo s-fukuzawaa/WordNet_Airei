@@ -100,7 +100,7 @@ public class WordNet
         	root=a.next();
         }
         
-        if(temp.adj(root).iterator().hasNext()==false)
+        if(temp.adj(root).iterator().hasNext()==true)
         {
         	throw new java.lang.IllegalArgumentException();
         }
@@ -178,8 +178,8 @@ public class WordNet
     // for unit testing of this class
     public static void main(String[] args)
     {
-		String synsetsFile = "testInput/synsets100-subgraph.txt";
-		String hypernymsFile = "testInput/hypernyms100-subgraph.txt";
+		String synsetsFile = "testInput/synsets15.txt";
+		String hypernymsFile = "testInput/hypernyms15Path.txt";
 
 		WordNet wordnet = new WordNet(synsetsFile, hypernymsFile);
        /* wordnet.testNouns("municipality", "region");
