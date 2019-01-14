@@ -100,8 +100,8 @@ public class WordNet
         while(a.hasNext())
         {
         	toporder.add(a.next());
-        	root=a.next();
         }
+        root=toporder.indexOf(toporder.size()-1);
         DirectedDFS toptobottom= new DirectedDFS(temp,toporder.get(0));
         
         if(temp.adj(root).iterator().hasNext()==true||!toptobottom.marked(root))
