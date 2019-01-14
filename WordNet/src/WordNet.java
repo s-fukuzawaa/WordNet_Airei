@@ -94,28 +94,30 @@ public class WordNet
         
         Topological t= new Topological(temp);
         int root=0;
-        int headcount=0;
         ArrayList<Integer> toporder= new ArrayList<Integer>();
+        ArrayList<Integer> allorder= new ArrayList<Integer>();
         Iterator<Integer> path= t.order().iterator();
         
         while(path.hasNext())
         {
         	int ordercheck=path.next();
         	root=ordercheck;
+        	allorder.add(ordercheck);
         	if(temp.adj(ordercheck).iterator().hasNext())
         	{
         		toporder.add(ordercheck);
         	}
-        	else if(temp.reverse().adj(ordercheck).iterator().hasNext())
-        	{
-        		headcount++;
-        	}
+        	
         }
         
         DirectedDFS toptobottom= new DirectedDFS(temp,toporder.get(0));
        
+        if(temp.reverse().adj(allorder.size()-2).iterator().hasNext()&&temp.reverse().adj(allorder.size()-1).iterator().hasNext())
+        {
+        	throw new java.lang.IllegalArgumentException();
+        }
         
-        if(temp.adj(root).iterator().hasNext()==true||!toptobottom.marked(root)||headcount>1)
+        if(temp.adj(root).iterator().hasNext()==true||!toptobottom.marked(root))
         {
         	throw new java.lang.IllegalArgumentException();
         }
